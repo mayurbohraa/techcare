@@ -1,0 +1,108 @@
+.navbar {
+  height: 70px;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 24px;
+  background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  border-radius: 70px;
+  opacity: 1;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  justify-self: start;
+}
+
+.navbar__logo-img {
+  display: block;
+  height: 42px;
+  width: auto;
+  max-width: min(200px, 28vw);
+  object-fit: contain;
+}
+
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-self: center;
+}
+
+.navbar__link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--unnamed-font-family-manrope);
+  font-size: var(--unnamed-font-size-14);
+  line-height: var(--unnamed-line-spacing-19);
+  font-weight: 500;
+}
+
+.navbar__link svg {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.navbar__link:not(.navbar__link--active) {
+  color: var(--unnamed-color-707070);
+}
+
+.navbar__link--active {
+  background: var(--activestate_bg_1);
+  border-radius: 24px;
+  color: var(--unnamed-color-072635);
+  font-weight: 600;
+}
+
+.navbar__link--active svg {
+  color: var(--unnamed-color-072635);
+}
+
+.navbar__user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+}
+
+.navbar__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navbar__user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+  text-align: left;
+  margin-right: 20px;
+}
+
+.navbar__user-name {
+  font-size: var(--unnamed-font-size-14);
+  line-height: var(--unnamed-line-spacing-19);
+}
+
+.navbar__user-title {
+  font-family: var(--unnamed-font-family-manrope);
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: var(--unnamed-font-weight-normal);
+  color: var(--unnamed-color-707070);
+}
+
+.navbar__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--unnamed-color-072635);
+  cursor: pointer;
+}

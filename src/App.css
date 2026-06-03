@@ -1,0 +1,32 @@
+.app {
+  padding: 18px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.app--state {
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-page);
+}
+
+.state-message {
+  font-family: var(--unnamed-font-family-manrope);
+  font-size: 16px;
+  font-weight: var(--unnamed-font-weight-bold);
+  color: var(--unnamed-color-707070);
+}
+
+.state-message--error {
+  color: #c0392b;
+}
+
+.main-layout {
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: 350px 1fr 350px;
+  gap: 20px;
+  height: calc(140vh-72px);
+}
+

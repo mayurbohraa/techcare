@@ -1,0 +1,40 @@
+.vital-card {
+  border-radius: 12px;
+  padding: 20px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vital-card--resp {
+  background: var(--vital-blue-bg);
+}
+
+.vital-card--temp {
+  background: var(--vital-pink-bg);
+}
+
+.vital-card--heart {
+  background: var(--vital-red-bg);
+}
+
+
+.vital-card__label {
+  font-size: 14px;
+  color: var(--text-dark);
+}
+
+.vital-card__value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+.vital-card__status {
+  font-size: 12px;
+  color: var(--text-medium);
+  margin-top: 10px;
+}
