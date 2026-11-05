@@ -17,20 +17,6 @@
   padding-right: 6px;
 }
 
-.labs__scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.labs__scroll::-webkit-scrollbar-track {
-  background: #e3e4e6;
-  border-radius: 6px;
-}
-
-.labs__scroll::-webkit-scrollbar-thumb {
-  background: var(--unnamed-color-072635);
-  border-radius: 6px;
-}
-
 .labs__list {
   list-style: none;
   margin: 0;

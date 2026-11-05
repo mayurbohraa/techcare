@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
-
 * {
   box-sizing: border-box;
 }
@@ -11,6 +9,7 @@ body,
   margin: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -21,8 +20,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-
 /* ─── Adobe XD design tokens ─── */
+
 :root {
   /* Colors */
   --unnamed-color-705aaa: #705aaa;
@@ -43,7 +42,6 @@ body {
   --unnamed-color-878787: #878787;
   --unnamed-color-ffffff: #ffffff;
   --unnamed-color-ff6200: #ff6200;
-
   /* Font tokens (XD export corrected: weight is unitless) */
   --unnamed-font-family-manrope: 'Manrope', sans-serif;
   --unnamed-font-style-normal: normal;
@@ -58,14 +56,12 @@ body {
   --unnamed-line-spacing-24: 24px;
   --unnamed-line-spacing-33: 33px;
   --unnamed-text-transform-titlecase: capitalize;
-
   /* App aliases (charts / vitals — not in XD export) */
   --systolic-pink: #e66fd2;
   --diastolic-purple: #8c6fe6;
-  --vital-blue-bg: #E0F3FA ;
-  --vital-pink-bg: #FFE6E9 ;
-  --vital-red-bg: #FFE6F1 ;
-
+  --vital-blue-bg: #e0f3fa;
+  --vital-pink-bg: #ffe6e9;
+  --vital-red-bg: #ffe6f1;
   /* Semantic aliases used across components */
   --teal-primary: var(--activestate_bg_1);
   --teal-dark: #01bfaf;
@@ -79,6 +75,7 @@ body {
 }
 
 /* ─── Character styles (XD) ─── */
+
 .card-title-24pt {
   font-family: var(--unnamed-font-family-manrope);
   font-style: var(--unnamed-font-style-normal);
@@ -128,4 +125,125 @@ body {
   line-height: var(--unnamed-line-spacing-19);
   letter-spacing: var(--unnamed-character-spacing-0);
   color: var(--unnamed-color-072635);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #055a92;
+  outline-offset: 4px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.supporting-note,
+.empty-message {
+  color: var(--text-medium);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 16px;
+  transform: translateY(-160%);
+  z-index: 10;
+  background: white;
+  padding: 12px;
+  color: var(--text-dark);
+  border-radius: 8px;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Keep the gutter stable while the scrollbar fades between scroll gestures. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+:where(
+  .dashboard-content,
+  .sidebar__list,
+  .diag__table-scroll,
+  .labs__scroll,
+  .navbar__nav,
+  .refresh-notice,
+  .app--state,
+  .conversation-log
+) {
+  transition: scrollbar-color 180ms ease;
+}
+
+[data-scrolling='true'] {
+  scrollbar-color: var(--text-dark) var(--sidebar-active);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 8px;
+  transition: background-color 180ms ease;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+[data-scrolling='true']::-webkit-scrollbar-track {
+  background: var(--sidebar-active);
+}
+
+[data-scrolling='true']::-webkit-scrollbar-thumb {
+  background: var(--text-dark);
+  border-color: var(--sidebar-active);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }

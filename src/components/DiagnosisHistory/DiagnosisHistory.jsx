@@ -1,45 +1,13 @@
-import BPChart from "../BPChart/BPChart";
-import VitalCard from "../VitalCard/VitalCard";
-import "./DiagnosisHistory.css";
-import IconLungs from "../../assets/respiratory rate.svg";
-import IconThermometer from "../../assets/temperature.svg";
-import IconHeartPulse from "../../assets/HeartBPM.svg";
-import IconExpand from '../../assets/expand_more_FILL0_wght300_GRAD0_opsz24.svg'
-
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-function monthIndex(m) {
-  const i = MONTHS.indexOf(m);
-  return i === -1 ? 0 : i;
-}
-
-function compareChrono(a, b) {
-  if (a.year !== b.year) return a.year - b.year;
-  return monthIndex(a.month) - monthIndex(b.month);
-}
+import BPChart from '../BPChart/BPChart';
+import VitalCard from '../VitalCard/VitalCard';
+import './DiagnosisHistory.css';
+import IconLungs from '../../assets/respiratory rate.svg';
+import IconThermometer from '../../assets/temperature.svg';
+import IconHeartPulse from '../../assets/HeartBPM.svg';
+import { recentHistory } from '../../utils/diagnosisHistory';
 
 function chartLabel(entry) {
-  const short = entry.month.slice(0, 3);
-  return `${short}, ${entry.year}`;
-}
-
-function getLastSixForChart(history) {
-  if (!history || !history.length) return [];
-  const lastSix = history.slice(0, 6);
-  return [...lastSix].sort(compareChrono);
+  return `${entry.month.slice(0, 3)}, ${entry.year}`;
 }
 
 function BpLevelText({ levels }) {
@@ -47,7 +15,7 @@ function BpLevelText({ levels }) {
     return <span className="dh-bp__level dh-bp__level--muted">—</span>;
   }
   const s = String(levels);
-  if (s.includes("Higher")) {
+  if (s.includes('Higher')) {
     return (
       <span className="dh-bp__level">
         <span className="dh-bp__arrow dh-bp__arrow--high">▲</span>
@@ -55,7 +23,7 @@ function BpLevelText({ levels }) {
       </span>
     );
   }
-  if (s.includes("Lower")) {
+  if (s.includes('Lower')) {
     return (
       <span className="dh-bp__level">
         <span className="dh-bp__arrow dh-bp__arrow--low">▼</span>
@@ -67,8 +35,7 @@ function BpLevelText({ levels }) {
 }
 
 export default function DiagnosisHistory({ data }) {
-  const history = data || [];
-  const chartRows = getLastSixForChart(history);
+  const chartRows = recentHistory(data);
   const labels = chartRows.map(chartLabel);
   const systolic = chartRows.map(
     (h) => h.blood_pressure?.systolic?.value ?? null,
@@ -77,7 +44,7 @@ export default function DiagnosisHistory({ data }) {
     (h) => h.blood_pressure?.diastolic?.value ?? null,
   );
 
-  const latest = history[0] || {};
+  const latest = chartRows.at(-1) || {};
   const sys = latest.blood_pressure?.systolic;
   const dia = latest.blood_pressure?.diastolic;
   const rr = latest.respiratory_rate;
@@ -85,43 +52,42 @@ export default function DiagnosisHistory({ data }) {
   const hr = latest.heart_rate;
 
   return (
-    <div className="dh">
+    <section className="dh" aria-labelledby="history-title">
+      <h2 id="history-title" className="dh-title card-title-24pt">
+        Diagnosis History
+      </h2>
 
-      <h2 className="dh-title card-title-24pt">Diagnosis History</h2>
-      
       <div className="dh-bp-card">
-
         <div className="dh-bp-card__body">
-
           <div>
             <div className="dh-bp-card__head">
-            <h3 className="dh-bp-card__title inner-card-title-18pt">
-              Blood Pressure
-            </h3>
-            <span className="dh-bp-card__dropdown body-secondary-info-14pt">
-              <span>Last 6 months </span>              
-              <img src={IconExpand} alt="" srcset="" />
-            </span>
-          </div>
-
-          <div className="dh-bp-card__chart">
-            <BPChart
-              labels={labels}
-              systolic={systolic}
-              diastolic={diastolic}
-            />
+              <h3 className="dh-bp-card__title inner-card-title-18pt">
+                Blood Pressure
+              </h3>
+              <span className="dh-bp-card__dropdown body-secondary-info-14pt">
+                Latest 6 records
+              </span>
+            </div>
+            <div className="dh-bp-card__chart">
+              {chartRows.length ? (
+                <BPChart
+                  labels={labels}
+                  systolic={systolic}
+                  diastolic={diastolic}
+                />
+              ) : (
+                <p className="empty-message">No diagnosis history available.</p>
+              )}
             </div>
           </div>
-          
 
           <div className="dh-bp-card__stats">
-
             <div className="dh-bp__stat">
               <div className="dh-bp__stat-head">
                 <span className="dh-bp__dot dh-bp__dot--pink" />
                 <span className="dh-bp__stat-label">Systolic</span>
               </div>
-              <div className="dh-bp__value">{sys?.value ?? "—"}</div>
+              <div className="dh-bp__value">{sys?.value ?? '—'}</div>
               <BpLevelText levels={sys?.levels} />
             </div>
 
@@ -132,38 +98,36 @@ export default function DiagnosisHistory({ data }) {
                 <span className="dh-bp__dot dh-bp__dot--purple" />
                 <span className="dh-bp__stat-label">Diastolic</span>
               </div>
-              <div className="dh-bp__value">{dia?.value ?? "—"}</div>
+              <div className="dh-bp__value">{dia?.value ?? '—'}</div>
               <BpLevelText levels={dia?.levels} />
             </div>
-
           </div>
         </div>
       </div>
 
-
       <div className="dh-vitals">
         <VitalCard
           variant="resp"
-          icon={<img src={IconLungs} alt="" srcset="" />}
+          icon={<img src={IconLungs} alt="" />}
           label="Respiratory Rate"
-          value={rr?.value != null ? `${rr.value} bpm` : "—"}
-          status={rr?.levels ?? ""}
+          value={rr?.value != null ? `${rr.value} bpm` : '—'}
+          status={rr?.levels ?? ''}
         />
         <VitalCard
           variant="temp"
-          icon={<img src={IconThermometer} alt="" srcset="" />}
+          icon={<img src={IconThermometer} alt="" />}
           label="Temperature"
-          value={temp?.value != null ? `${temp.value}°F` : "—"}
-          status={temp?.levels ?? ""}
+          value={temp?.value != null ? `${temp.value}°F` : '—'}
+          status={temp?.levels ?? ''}
         />
         <VitalCard
           variant="heart"
-          icon={<img src={IconHeartPulse} alt="" srcset="" />}
+          icon={<img src={IconHeartPulse} alt="" />}
           label="Heart Rate"
-          value={hr?.value != null ? `${hr.value} bpm` : "—"}
-          status={hr?.levels ?? ""}
+          value={hr?.value != null ? `${hr.value} bpm` : '—'}
+          status={hr?.levels ?? ''}
         />
       </div>
-    </div>
+    </section>
   );
 }

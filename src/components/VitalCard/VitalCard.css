@@ -1,11 +1,11 @@
 .vital-card {
   border-radius: 12px;
-  padding: 20px;
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  padding: 16px;
+  gap: 16px;
 }
 
 .vital-card--resp {
@@ -20,21 +20,37 @@
   background: var(--vital-red-bg);
 }
 
-
 .vital-card__label {
   font-size: 14px;
   color: var(--text-dark);
 }
 
 .vital-card__value {
-  font-size: 28px;
   font-weight: 700;
   color: var(--text-dark);
   margin-top: 4px;
+  font-size: clamp(22px, 2vw, 28px);
+  overflow-wrap: anywhere;
 }
 
 .vital-card__status {
   font-size: 12px;
   color: var(--text-medium);
   margin-top: 10px;
+}
+
+.vital-card__icon img {
+  width: 80px;
+  height: 80px;
+  max-width: 100%;
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  .dh-vitals {
+    flex-direction: column;
+  }
+  .vital-card {
+    flex-direction: row;
+    align-items: center;
+  }
 }

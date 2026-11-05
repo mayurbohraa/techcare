@@ -1,6 +1,24 @@
 import { useEffect, useMemo, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import {
+  Chart,
+  LineController,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+} from 'chart.js';
+
 import './BPChart.css';
+
+Chart.register(
+  LineController,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+);
 
 const PINK = '#E66FD2';
 const PURPLE = '#8C6FE6';
@@ -43,6 +61,10 @@ export default function BPChart({ labels, systolic, diastolic }) {
   const options = useMemo(
     () => ({
       responsive: true,
+      animation: globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')
+        .matches
+        ? false
+        : undefined,
       maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
@@ -73,8 +95,8 @@ export default function BPChart({ labels, systolic, diastolic }) {
           border: { display: false },
         },
         y: {
-          min: 60,
-          max: 180,
+          suggestedMin: 60,
+          suggestedMax: 180,
           ticks: { stepSize: 20, color: '#707070', font: { size: 11 } },
           grid: { color: 'rgba(7, 38, 53, 0.06)' },
           border: { display: false },
@@ -118,7 +140,30 @@ export default function BPChart({ labels, systolic, diastolic }) {
 
   return (
     <div className="bp-chart">
-      <canvas ref={canvasRef} />
+      <canvas
+        ref={canvasRef}
+        role="img"
+        aria-label="Blood pressure history in millimeters of mercury. Values are listed below."
+      />
+      <table className="sr-only">
+        <caption>Blood pressure history (mmHg)</caption>
+        <thead>
+          <tr>
+            <th scope="col">Month</th>
+            <th scope="col">Systolic</th>
+            <th scope="col">Diastolic</th>
+          </tr>
+        </thead>
+        <tbody>
+          {labels.map((label, index) => (
+            <tr key={`${label}-${index}`}>
+              <th scope="row">{label}</th>
+              <td>{systolic[index] ?? 'Unavailable'}</td>
+              <td>{diastolic[index] ?? 'Unavailable'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

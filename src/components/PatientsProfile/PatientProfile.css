@@ -71,7 +71,6 @@
 }
 
 .pp-btn {
-  width: 60%;
   margin-top: 20px;
   background: var(--activestate_bg_1);
   border: none;
@@ -83,10 +82,20 @@
   line-height: var(--unnamed-line-spacing-19);
   color: var(--unnamed-color-072635);
   cursor: pointer;
+  width: auto;
+  max-width: 100%;
 }
 
 @media (max-width: 900px) {
   .pp-card {
     padding: 18px 16px;
   }
+}
+
+.pp-card__placeholder {
+  display: grid;
+  place-items: center;
+  background: var(--sidebar-active);
+  font-size: 48px;
+  font-weight: 800;
 }

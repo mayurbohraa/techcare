@@ -27,3 +27,7 @@ yarn-error.log*
 
 .idea
 .vscode
+
+# Local environment variants; retain only the public configuration template
+.env.*
+!.env.example
