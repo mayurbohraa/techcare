@@ -6,7 +6,7 @@ Tech.Care is a responsive healthcare dashboard for browsing patient profiles, di
 
 ## Project Preview
 
-<img src="public/project-preview.webp" alt="Tech.Care showcase featuring the patient dashboard, overview, and responsive layouts" width="520" />
+<img src="public/project-preview.webp" alt="Tech.Care showcase featuring the patient dashboard, overview, and responsive layouts" width="100%" />
 
 ## Key Features
 
@@ -18,42 +18,43 @@ Tech.Care is a responsive healthcare dashboard for browsing patient profiles, di
 - View doctor information and refresh patient records from Settings.
 - Recover from failed requests with timeout handling, retry controls, and retained records during refresh failures.
 
-## Live Website
+Patient records and overview calculations use the remote patient API. Appointments, initial conversations, transactions, and additional doctor information are defined locally. Replies are kept in memory for the current session and are not delivered to a messaging service.
 
-[https://techcare-liart.vercel.app/](https://techcare-liart.vercel.app/)
+Patient editing, archiving, message actions in the patient menu, and lab-download buttons are clickable interface controls without an associated operation. Settings displays fixed preferences and provides a working patient-data refresh action. The application includes no backend, database, user sign-in, payment processing, or persistent appointment management.
 
-## Technology
+## Live Website & Related Repository
+
+https://techcare-liart.vercel.app/
+
+## Tech Stack
 
 React 18, JavaScript/JSX, CSS, Vite 5, and Chart.js 4. Tests use Node.js's built-in test runner, Vite's SSR module loader, and React server rendering.
 
-## Getting Started
+## Prerequisites
 
-Node.js 24.x and npm are recommended; the project was verified with Node.js 24.13.0 and npm 11.12.1.
+Node.js and npm, plus patient API credentials from the provider. Node.js 24.13.0 and npm 11.12.1 are the previously verified runtime versions.
 
-From the repository root:
+## Installation & Setup
 
-```bash
-npm ci
-```
+1. Open the repository root.
+2. Install the locked dependencies.
 
-Copy `.env.example` to `.env` and provide the patient API credentials:
+   ```sh
+   npm ci
+   ```
 
-```dotenv
-VITE_COALITION_USER=your_api_username
-VITE_COALITION_PASSWORD=your_api_password
-```
+3. Copy `.env.example` to `.env` and provide the patient API credentials.
+
+   ```dotenv
+   VITE_COALITION_USER=your_api_username
+   VITE_COALITION_PASSWORD=your_api_password
+   ```
 
 The API provider's documentation link is included in `.env.example`. These `VITE_` values are included in the browser build and sent in a Basic Authorization header. Use credentials intended for this frontend integration; private credentials require a server-side service. Keep `.env` out of Git.
 
-Start the development server:
+## Running Locally
 
-```bash
-npm run dev
-```
-
-Open the URL printed by Vite. The default development port is 5173; Vite may choose another port if it is occupied.
-
-## Commands
+Start development with `npm run dev` and open the URL printed by Vite, normally `http://localhost:5173/`.
 
 | Command | Purpose |
 | --- | --- |
@@ -63,8 +64,19 @@ Open the URL printed by Vite. The default development port is 5173; Vite may cho
 | `npm run preview` | Serve the production build locally after building. |
 | `npm test` | Run the automated tests. |
 
-## Data and Functional Scope
+## Project Structure
 
-Patient records and overview calculations use the remote patient API. Appointments, initial conversations, transactions, and additional doctor information are defined locally. Replies are kept in memory for the current session and are not delivered to a messaging service.
-
-Patient editing, archiving, message actions in the patient menu, and lab-download buttons are clickable interface controls without an associated operation. Settings displays fixed preferences and provides a working patient-data refresh action. The application includes no backend, database, user sign-in, payment processing, or persistent appointment management.
+```text
+public/                 # Static assets and README preview
+src/
+├── api/                # Patient API requests
+├── components/         # Dashboard and workspace views
+├── data/               # Local supporting records
+├── hooks/              # Shared interface behavior
+├── utils/              # Patient and history transformations
+├── App.jsx             # Workspace composition
+└── main.jsx            # React entry
+tests/                  # Automated checks
+.env.example            # Public API configuration template
+vite.config.js          # Build configuration
+```
